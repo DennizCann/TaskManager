@@ -1,32 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/edtTaskName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task Name"
-        android:textSize="16sp"
-        android:padding="8dp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtTaskDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Task Description"
-        android:textSize="16sp"
-        android:padding="8dp" />
+        <!-- Görev Adı Girişi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Name"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnSaveTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Task"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp" />
-</LinearLayout>
+        <EditText
+            android:id="@+id/edtTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter task name"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Görev Açıklaması Girişi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Description"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/edtTaskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter task description"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Tarih ve Saat Ayarı -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due Date and Time"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnSetDueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Set Due Date and Time"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/txtDueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No date selected"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Kaydet Butonu -->
+        <Button
+            android:id="@+id/btnSaveTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Task"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</ScrollView>
