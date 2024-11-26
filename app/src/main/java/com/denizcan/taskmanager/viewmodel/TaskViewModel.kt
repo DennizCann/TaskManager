@@ -7,8 +7,8 @@ import com.denizcan.taskmanager.data.Task
 
 class TaskViewModel : ViewModel() {
 
-    private val _tasks = MutableLiveData<List<Task>>()
-    val tasks: LiveData<List<Task>> get() = _tasks
+    private val _tasks = MutableLiveData<List<Task>?>()
+    val tasks: MutableLiveData<List<Task>?> get() = _tasks
 
     private val _filteredTasks = MutableLiveData<List<Task>>()
     val filteredTasks: LiveData<List<Task>> get() = _filteredTasks

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.denizcan.taskmanager.data.Task
 import com.denizcan.taskmanager.databinding.ItemTaskBinding
 
-
 class TaskAdapter(
     private var taskList: List<Task>,
     private val onTaskClick: (Task) -> Unit,
@@ -18,11 +17,15 @@ class TaskAdapter(
         fun bind(task: Task) {
             binding.txtTaskName.text = task.name
             binding.txtTaskDescription.text = task.description
-            binding.checkboxTaskCompleted.setOnCheckedChangeListener(null)
+
+            // Checkbox durumunu güncelle
+            binding.checkboxTaskCompleted.setOnCheckedChangeListener(null) // Önceki dinleyiciyi temizle
             binding.checkboxTaskCompleted.isChecked = task.isCompleted
             binding.checkboxTaskCompleted.setOnCheckedChangeListener { _, isChecked ->
                 onTaskCompletionChange(task, isChecked)
             }
+
+            // Tıklama ile detaylara git
             binding.root.setOnClickListener {
                 onTaskClick(task)
             }

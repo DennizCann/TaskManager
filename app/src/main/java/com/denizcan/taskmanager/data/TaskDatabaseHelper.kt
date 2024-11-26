@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class TaskDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -27,12 +26,6 @@ class TaskDatabaseHelper(context: Context) :
         }
     }
 
-    override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_TASKS")
-        onCreate(db)
-    }
-
-
     fun insertTask(task: Task): Long {
         val db = writableDatabase
         val contentValues = ContentValues().apply {
@@ -44,6 +37,11 @@ class TaskDatabaseHelper(context: Context) :
         db.close()
         return result
     }
+    fun deleteTask(taskId: Int) {
+        val db = writableDatabase
+        db.delete(TABLE_TASKS, "$COLUMN_ID=?", arrayOf(taskId.toString()))
+        db.close()
+    }
 
     fun updateTask(task: Task) {
         val db = writableDatabase
@@ -53,14 +51,6 @@ class TaskDatabaseHelper(context: Context) :
             put(COLUMN_IS_COMPLETED, if (task.isCompleted) 1 else 0)
         }
         db.update(TABLE_TASKS, values, "$COLUMN_ID = ?", arrayOf(task.id.toString()))
-        db.close()
-    }
-
-
-
-    fun deleteTask(taskId: Int) {
-        val db = writableDatabase
-        db.delete(TABLE_TASKS, "$COLUMN_ID=?", arrayOf(taskId.toString()))
         db.close()
     }
 
@@ -85,7 +75,6 @@ class TaskDatabaseHelper(context: Context) :
         db.close()
         return tasks
     }
-
 
     companion object {
         private const val DATABASE_NAME = "task_manager.db"

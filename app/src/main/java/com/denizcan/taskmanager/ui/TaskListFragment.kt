@@ -34,12 +34,13 @@ class TaskListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+        val databaseHelper = TaskDatabaseHelper(requireContext())
+
+        setupRecyclerView(databaseHelper)
         setupRadioButtons()
         setupFab()
 
-        // Veritabanı bağlantısını başlat ve görevleri yükle
-        val databaseHelper = TaskDatabaseHelper(requireContext())
+        // Veritabanından görevleri al ve ViewModel'e gönder
         viewModel.setTasks(databaseHelper.getAllTasks())
 
         // Görev listesi güncellemelerini gözlemle
@@ -48,11 +49,16 @@ class TaskListFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(databaseHelper: TaskDatabaseHelper) {
         adapter = TaskAdapter(
             taskList = mutableListOf(),
             onTaskClick = { task -> navigateToDetail(task) },
-            onTaskCompletionChange = { task, isCompleted -> updateTaskCompletion(task, isCompleted) }
+            onTaskCompletionChange = { task, isCompleted ->
+                val updatedTask = task.copy(isCompleted = isCompleted)
+                databaseHelper.updateTask(updatedTask)
+                viewModel.updateTask(updatedTask)
+                Toast.makeText(requireContext(), "Task updated", Toast.LENGTH_SHORT).show()
+            }
         )
         binding.recyclerViewTasks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTasks.adapter = adapter
@@ -79,12 +85,6 @@ class TaskListFragment : Fragment() {
             putSerializable("task", task)
         }
         findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment, bundle)
-    }
-
-    private fun updateTaskCompletion(task: Task, isCompleted: Boolean) {
-        val updatedTask = task.copy(isCompleted = isCompleted)
-        viewModel.updateTask(updatedTask)
-        Toast.makeText(requireContext(), "Task updated", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
