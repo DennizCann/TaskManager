@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/taskListFragment">
+
+    <!-- Task List Fragment -->
+    <fragment
+        android:id="@+id/taskListFragment"
+        android:name="com.denizcan.taskmanager.ui.TaskListFragment"
+        android:label="Task List">
+        <action
+            android:id="@+id/action_taskListFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_taskListFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
+    </fragment>
+
+    <!-- Add Task Fragment -->
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.denizcan.taskmanager.ui.AddTaskFragment"
+        android:label="Add Task">
+        <argument
+            android:name="task"
+            app:argType="com.denizcan.taskmanager.data.Task"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addTaskFragment_to_taskListFragment"
+            app:popUpTo="@id/taskListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Task Detail Fragment -->
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.denizcan.taskmanager.ui.TaskDetailFragment"
+        android:label="Task Details">
+        <argument
+            android:name="task"
+            app:argType="com.denizcan.taskmanager.data.Task" />
+        <action
+            android:id="@+id/action_taskDetailFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_taskDetailFragment_to_taskListFragment"
+            app:popUpTo="@id/taskListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
