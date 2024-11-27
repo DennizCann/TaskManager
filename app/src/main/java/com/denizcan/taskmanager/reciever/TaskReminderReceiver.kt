@@ -15,6 +15,9 @@ import com.denizcan.taskmanager.R
 
 class TaskReminderReceiver : BroadcastReceiver() {
 
+    private val CHANNEL_ID = "taskReminderChannel"
+    private val NOTIFICATION_ID = 1
+
     override fun onReceive(context: Context, intent: Intent) {
         // Bildirim izinlerini kontrol et (Android 13 ve üzeri)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -29,15 +32,16 @@ class TaskReminderReceiver : BroadcastReceiver() {
         createNotificationChannel(context)
 
         // Bildirim oluştur
-        val notification: Notification = NotificationCompat.Builder(context, "taskReminderChannel")
+        val notification: Notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)  // Kendi simgenizi buraya koyun
             .setContentTitle("Task Reminder")
             .setContentText("You have a task coming up soon!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true) // Bildirimi tıklanabilir yapar ve kapatır
             .build()
 
         // Notification Manager ile bildirimi göster
-        NotificationManagerCompat.from(context).notify(System.currentTimeMillis().toInt(), notification)
+        NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
     }
 
     // Bildirim kanalını oluşturma (Android 8.0 ve üzeri için)
@@ -46,7 +50,7 @@ class TaskReminderReceiver : BroadcastReceiver() {
             val name = "Task Reminder Channel"
             val descriptionText = "Channel for task reminders"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("taskReminderChannel", name, importance).apply {
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
 

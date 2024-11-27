@@ -1,35 +1,99 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".ui.TaskDetailFragment">
 
+    <!-- Görev Adı -->
     <TextView
         android:id="@+id/txtTaskName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:text="Task Name"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTaskDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp"
         android:textStyle="bold" />
 
+    <!-- Görev Açıklaması -->
     <TextView
         android:id="@+id/txtTaskDescription"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp" />
+        android:text="Task Description"
+        android:textSize="16sp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTaskName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Görev Due Date (Tarih ve Saat) -->
+    <TextView
+        android:id="@+id/txtTaskDueDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Due Date: Not Set"
+        android:textSize="16sp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTaskDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Görev Kategorisi -->
+    <TextView
+        android:id="@+id/txtTaskCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Category: Not Set"
+        android:textSize="16sp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTaskDueDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Kategori Düzenleme Butonu -->
+    <Button
+        android:id="@+id/btnEditCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Edit Category"
+        android:background="?attr/selectableItemBackground"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtTaskCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Görev Silme Butonu -->
     <Button
         android:id="@+id/btnDeleteTask"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Delete Task" />
+        android:text="Delete Task"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Görev Düzenleme Butonu -->
     <Button
         android:id="@+id/btnEditTask"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Edit Task"
-        android:layout_marginTop="16dp" />
+        android:background="?attr/selectableItemBackground"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

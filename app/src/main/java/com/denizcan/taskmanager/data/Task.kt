@@ -3,9 +3,10 @@ package com.denizcan.taskmanager.data
 import java.io.Serializable
 
 data class Task(
-    val id: Int = 0,
+    val id: Int,
     val name: String,
     val description: String,
-    val isCompleted: Boolean = false,
-    val dueDate: Long? = null // Tarih ve saat bilgisi (Unix Timestamp)
+    val isCompleted: Boolean,
+    val dueDate: Long? = null,
+    var category: String? = null  // Kategori ekleniyor
 ):Serializable

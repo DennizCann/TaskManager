@@ -43,10 +43,11 @@ class TaskListFragment : Fragment() {
         // Veritabanından görevleri al ve ViewModel'e gönder
         viewModel.setTasks(databaseHelper.getAllTasks())
 
-        // Görev listesi güncellemelerini gözlemle
-        viewModel.filteredTasks.observe(viewLifecycleOwner) { tasks ->
+        // onViewCreated fonksiyonu içinde
+        viewModel.filteredTasks.observe(viewLifecycleOwner) { tasks: List<Task> ->
             adapter.updateTasks(tasks)
         }
+
     }
 
     private fun setupRecyclerView(databaseHelper: TaskDatabaseHelper) {
@@ -86,6 +87,8 @@ class TaskListFragment : Fragment() {
         }
         findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment, bundle)
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

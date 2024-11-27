@@ -3,6 +3,9 @@ package com.denizcan.taskmanager.ui
 import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -16,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.denizcan.taskmanager.R
 import com.denizcan.taskmanager.broadcast.TaskReminderReceiver
+import com.denizcan.taskmanager.service.TaskReminderService
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +47,9 @@ class MainActivity : AppCompatActivity() {
 
         // Alarmı kurma
         setTaskReminderAlarm()
+        startTaskReminderService()
+        scheduleTaskReminderJob()
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -120,4 +127,23 @@ class MainActivity : AppCompatActivity() {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         }
     }
+
+    private fun startTaskReminderService() {
+        val serviceIntent = Intent(this, TaskReminderService::class.java)
+        startService(serviceIntent)
+    }
+
+    private fun scheduleTaskReminderJob() {
+        val componentName = ComponentName(this, TaskReminderService::class.java)
+
+        val jobInfo = JobInfo.Builder(123, componentName)
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setPersisted(true)
+            .setPeriodic(15 * 60 * 1000) // 15 dakikada bir çalışsın
+            .build()
+
+        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+        jobScheduler.schedule(jobInfo)
+    }
+
 }
